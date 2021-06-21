@@ -28,6 +28,10 @@ type Mutation {
     The number of codes to create
     """
     codesToCreate: Int!
+    """
+    The discount percent to set on the discount codes.
+    """
+    discountPercent: Int!
   ): DiscountCodesResponse!
 }
 
@@ -44,4 +48,46 @@ type DiscountCode {
   Id description
   """
   id: ID!
+
+  """
+  The brand the code belongs to.
+  """
+  brand: Brand
+
+  """
+  The discount in percent.
+  """
+  discount: Int!
+
+  """
+  The discount code formatted for display.
+  """
+  code: String!
+
+  """
+  The date the code was created.
+  """
+  createdAt: String!
+
+  """
+  The date the code expires
+  """
+  expiresAt: String!
+}
+
+type Brand {
+  """
+  The name of the brand.
+  """
+  name: String!
+
+  """
+  The id of the brand.
+  """
+  id: ID!
+
+  """
+  The date the brand was created.
+  """
+  createdAt: String!
 }
