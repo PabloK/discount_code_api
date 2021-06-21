@@ -1,10 +1,15 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "module": "commonjs",
     "target": "es6",
     "outDir": "dist",
     "rootDir": ".",
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "strict": false
+    "strict": false,
+    "esModuleInterop": true,
+    "moduleResolution": "Node"
   }
 }

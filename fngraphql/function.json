@@ -17,5 +17,5 @@
       "name": "$return"
     }
   ],
-  "scriptFile": "../dist/fngraphql/index.js"
+  "scriptFile": "../dist/index.js"
 }
