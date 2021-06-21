@@ -39,14 +39,9 @@ export type DiscountCode = {
   expiresAt: Scalars['String'];
 };
 
-export type DiscountCodes = {
-  __typename?: 'DiscountCodes';
-  discountCodes: Array<Maybe<DiscountCode>>;
-};
-
 export type DiscountCodesResponse = {
   __typename?: 'DiscountCodesResponse';
-  discountCodes?: Maybe<DiscountCodes>;
+  discountCodes: Array<Maybe<DiscountCode>>;
 };
 
 export type Mutation = {
@@ -156,7 +151,6 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']>;
   DiscountCode: ResolverTypeWrapper<DiscountCode>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  DiscountCodes: ResolverTypeWrapper<DiscountCodes>;
   DiscountCodesResponse: ResolverTypeWrapper<DiscountCodesResponse>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
@@ -170,7 +164,6 @@ export type ResolversParentTypes = {
   ID: Scalars['ID'];
   DiscountCode: DiscountCode;
   Int: Scalars['Int'];
-  DiscountCodes: DiscountCodes;
   DiscountCodesResponse: DiscountCodesResponse;
   Mutation: {};
   Query: {};
@@ -194,13 +187,8 @@ export type DiscountCodeResolvers<ContextType = any, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DiscountCodesResolvers<ContextType = any, ParentType extends ResolversParentTypes['DiscountCodes'] = ResolversParentTypes['DiscountCodes']> = {
-  discountCodes?: Resolver<Array<Maybe<ResolversTypes['DiscountCode']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type DiscountCodesResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DiscountCodesResponse'] = ResolversParentTypes['DiscountCodesResponse']> = {
-  discountCodes?: Resolver<Maybe<ResolversTypes['DiscountCodes']>, ParentType, ContextType>;
+  discountCodes?: Resolver<Array<Maybe<ResolversTypes['DiscountCode']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -215,7 +203,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type Resolvers<ContextType = any> = {
   Brand?: BrandResolvers<ContextType>;
   DiscountCode?: DiscountCodeResolvers<ContextType>;
-  DiscountCodes?: DiscountCodesResolvers<ContextType>;
   DiscountCodesResponse?: DiscountCodesResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

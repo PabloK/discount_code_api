@@ -36,10 +36,6 @@ type Mutation {
 }
 
 type DiscountCodesResponse {
-  discountCodes: DiscountCodes
-}
-
-type DiscountCodes {
   discountCodes: [DiscountCode]!
 }
 
