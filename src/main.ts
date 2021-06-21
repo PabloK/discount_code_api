@@ -1,19 +1,39 @@
-import { AzureFunction, Context, HttpRequest } from '@azure/functions';
-import { constants } from 'http2';
+import { Context } from '@azure/functions';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { addResolversToSchema } from '@graphql-tools/schema';
+import { ApolloServer } from 'apollo-server-azure-functions';
+import * as path from 'path';
 
-interface HTTPResponse {
-    status: number
-    body: string
-}
+import { Resolvers } from '../src/types/graphql-types';
+import { DiscountCode, DiscountCodesResponse } from './types/graphql-types';
 
-const helloWorld: AzureFunction = async (context: Context, req: HttpRequest): Promise<HTTPResponse> => {
-    context.log('Http hello world action triggered');
+const schema = loadSchemaSync(path.join('graphql', 'schema.graphqls'), {
+  loaders: [new GraphQLFileLoader()]
+});
 
-    return {
-        status: constants.HTTP_STATUS_OK,
-        body: "Hello World"
-    };
-
+const resolvers: Resolvers = {
+    Query: {},
+    Mutation: {
+        createDiscountCodes: (parent: unknown, args: unknown, context: Context) => {
+            return {
+                discountCodes: {
+                    discountCodes: [
+                        {
+                            id: "1"
+                        } as DiscountCode
+            ]}} as DiscountCodesResponse
+        }
+    }
 };
 
-export default helloWorld;
+const schemaWithResolvers = addResolversToSchema({
+  schema,
+  resolvers
+});
+
+const server = new ApolloServer({
+  schema: schemaWithResolvers
+});
+
+export const graphqlHandler = server.createHandler();

@@ -15,9 +15,16 @@
     "prestart": "npm run compile",
     "start": "func start",
     "test": "run-s test:unit",
-    "test:unit": "jest --config jest.config.js --coverage"
+    "test:unit": "jest --config jest.config.js --coverage",
+    "generate": "graphql-codegen --config ./graphql/graphql-codegen.yml"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@graphql-codegen/cli": "^1.21.5",
+    "@graphql-codegen/typescript-operations": "^1.18.2",
+    "@graphql-codegen/typescript-resolvers": "^1.19.4",
+    "apollo-server-azure-functions": "^2.25.1",
+    "graphql": "^15.5.1"
+  },
   "devDependencies": {
     "jest": "^27.0.4",
     "@vercel/ncc": "^0.28.6",

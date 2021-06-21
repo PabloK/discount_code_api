@@ -1,0 +1,47 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  """
+  Fetch a discount code with a specified id
+  """
+  getDiscountCode(
+    """
+    The discount code id for
+    """
+    id: ID!
+  ): DiscountCode!
+}
+
+type Mutation {
+  """
+  Create the specified number of discount codes for the specified brand
+  """
+  createDiscountCodes(
+    """
+    The brand Id to create discount codes for.
+    """
+    id: ID!
+    """
+    The number of codes to create
+    """
+    codesToCreate: Int!
+  ): DiscountCodesResponse!
+}
+
+type DiscountCodesResponse {
+  discountCodes: DiscountCodes
+}
+
+type DiscountCodes {
+  discountCodes: [DiscountCode]!
+}
+
+type DiscountCode {
+  """
+  Id description
+  """
+  id: ID!
+}
