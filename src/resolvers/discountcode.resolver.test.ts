@@ -5,25 +5,25 @@ import { ApolloError } from 'apollo-server-azure-functions';
 import Container from 'typedi';
 
 import { MutationCreateDiscountCodesArgs } from '../types/graphql-types';
-import { DiscountCodesResolver } from './discountcode.resolver';
+import { DiscountCodeResolver } from './discountcode.resolver';
 
 
 describe('DiscountCodeResolver', () => {
 
-  describe('CreateDiscountCodes', () => {
+  describe('createDiscountCodes', () => {
 
-    let discountCodesResolver: DiscountCodesResolver;
+    let discountCodeResolver: DiscountCodeResolver;
     const mockLog = { info: () => {}, error: () => {}}
 
     beforeEach(() => {
-      discountCodesResolver = Container.get(DiscountCodesResolver);
+      discountCodeResolver = Container.get(DiscountCodeResolver);
     });
 
     it('should create specified number of new discount codes', async () => {
       const startTime = Date.now()
       const args = { codesToCreate: 10, discountPercent: 10, id: "1" } as MutationCreateDiscountCodesArgs;
       const emptyContext = { log: mockLog} as Context;
-      const actualResponse = await discountCodesResolver.createDiscountCodes(args, emptyContext);
+      const actualResponse = await discountCodeResolver.createDiscountCodes(args, emptyContext);
       expect(actualResponse.length).toBe(10);
       for (const discountCode of actualResponse) {
         expect(discountCode.brand).toBe("1");
@@ -36,7 +36,7 @@ describe('DiscountCodeResolver', () => {
       const startTime = Date.now()
       const args = { codesToCreate: 100000, discountPercent: 10, id: "1" } as MutationCreateDiscountCodesArgs;
       const emptyContext = { log: mockLog} as Context;
-      const actualResponse = await discountCodesResolver.createDiscountCodes(args, emptyContext);
+      const actualResponse = await discountCodeResolver.createDiscountCodes(args, emptyContext);
       expect(actualResponse.length).toBe(100000);
       const endTime = Date.now()
       const consumedTime = endTime - startTime;
@@ -48,7 +48,7 @@ describe('DiscountCodeResolver', () => {
       Date.now = () => { throw new Error("Could not generate date"); }
       const args = { codesToCreate: 1, discountPercent: 10, id: "1" } as MutationCreateDiscountCodesArgs;
       const emptyContext = { log: mockLog } as Context;
-      expect(discountCodesResolver.createDiscountCodes(args, emptyContext)).rejects.toThrowError(ApolloError);
+      expect(discountCodeResolver.createDiscountCodes(args, emptyContext)).rejects.toThrowError(ApolloError);
     });
 
   });

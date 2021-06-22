@@ -8,14 +8,14 @@ import * as path from 'path';
 import Container from 'typedi';
 
 import { Resolvers } from '../src/types/graphql-types';
-import { DiscountCodesResolver } from './resolvers/discountcode.resolver';
+import { DiscountCodeResolver } from './resolvers/discountcode.resolver';
 import { CreateDiscountCodesResponse, MutationCreateDiscountCodesArgs } from './types/graphql-types';
 
 const schema = loadSchemaSync(path.join('graphql', 'schema.graphqls'), {
   loaders: [new GraphQLFileLoader()]
 });
 
-const discountCodeResolver = Container.get(DiscountCodesResolver);
+const discountCodeResolver = Container.get(DiscountCodeResolver);
 
 const resolvers: Resolvers = {
     Query: {},

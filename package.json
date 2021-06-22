@@ -24,6 +24,7 @@
     "@graphql-codegen/typescript-resolvers": "^1.19.4",
     "@types/jest": "^26.0.23",
     "apollo-server-azure-functions": "^2.25.1",
+    "crypto": "^1.0.1",
     "graphql": "^15.5.1",
     "reflect-metadata": "^0.1.13",
     "ts-jest": "^27.0.3",
