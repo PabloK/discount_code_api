@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -13,41 +14,32 @@ export type Scalars = {
   Float: number;
 };
 
-export type Brand = {
-  __typename?: 'Brand';
-  /** The name of the brand. */
-  name: Scalars['String'];
-  /** The id of the brand. */
-  id: Scalars['ID'];
-  /** The date the brand was created. */
-  createdAt: Scalars['String'];
+export type CreateDiscountCodesResponse = {
+  __typename?: 'CreateDiscountCodesResponse';
+  /** A boolean representing the mutation result */
+  created: Scalars['Boolean'];
 };
 
 export type DiscountCode = {
   __typename?: 'DiscountCode';
   /** Id description */
   id: Scalars['ID'];
-  /** The brand the code belongs to. */
-  brand?: Maybe<Brand>;
+  /** Identifier of the brand the code belongs to. */
+  brand: Scalars['ID'];
   /** The discount in percent. */
   discount: Scalars['Int'];
   /** The discount code formatted for display. */
   code: Scalars['String'];
   /** The date the code was created. */
-  createdAt: Scalars['String'];
+  createdAt: Scalars['Int'];
   /** The date the code expires */
   expiresAt: Scalars['String'];
-};
-
-export type DiscountCodesResponse = {
-  __typename?: 'DiscountCodesResponse';
-  discountCodes: Array<Maybe<DiscountCode>>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   /** Create the specified number of discount codes for the specified brand */
-  createDiscountCodes: DiscountCodesResponse;
+  createDiscountCodes: CreateDiscountCodesResponse;
 };
 
 
@@ -146,54 +138,45 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Brand: ResolverTypeWrapper<Brand>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  CreateDiscountCodesResponse: ResolverTypeWrapper<CreateDiscountCodesResponse>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   DiscountCode: ResolverTypeWrapper<DiscountCode>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  DiscountCodesResponse: ResolverTypeWrapper<DiscountCodesResponse>;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Brand: Brand;
-  String: Scalars['String'];
-  ID: Scalars['ID'];
+  CreateDiscountCodesResponse: CreateDiscountCodesResponse;
+  Boolean: Scalars['Boolean'];
   DiscountCode: DiscountCode;
+  ID: Scalars['ID'];
   Int: Scalars['Int'];
-  DiscountCodesResponse: DiscountCodesResponse;
+  String: Scalars['String'];
   Mutation: {};
   Query: {};
-  Boolean: Scalars['Boolean'];
 };
 
-export type BrandResolvers<ContextType = any, ParentType extends ResolversParentTypes['Brand'] = ResolversParentTypes['Brand']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type CreateDiscountCodesResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateDiscountCodesResponse'] = ResolversParentTypes['CreateDiscountCodesResponse']> = {
+  created?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type DiscountCodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['DiscountCode'] = ResolversParentTypes['DiscountCode']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  brand?: Resolver<Maybe<ResolversTypes['Brand']>, ParentType, ContextType>;
+  brand?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   discount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   expiresAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DiscountCodesResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DiscountCodesResponse'] = ResolversParentTypes['DiscountCodesResponse']> = {
-  discountCodes?: Resolver<Array<Maybe<ResolversTypes['DiscountCode']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createDiscountCodes?: Resolver<ResolversTypes['DiscountCodesResponse'], ParentType, ContextType, RequireFields<MutationCreateDiscountCodesArgs, 'id' | 'codesToCreate' | 'discountPercent'>>;
+  createDiscountCodes?: Resolver<ResolversTypes['CreateDiscountCodesResponse'], ParentType, ContextType, RequireFields<MutationCreateDiscountCodesArgs, 'id' | 'codesToCreate' | 'discountPercent'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -201,9 +184,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type Resolvers<ContextType = any> = {
-  Brand?: BrandResolvers<ContextType>;
+  CreateDiscountCodesResponse?: CreateDiscountCodesResponseResolvers<ContextType>;
   DiscountCode?: DiscountCodeResolvers<ContextType>;
-  DiscountCodesResponse?: DiscountCodesResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };

@@ -9,7 +9,7 @@ import Container from 'typedi';
 
 import { Resolvers } from '../src/types/graphql-types';
 import { DiscountCodesResolver } from './resolvers/discountcode.resolver';
-import { MutationCreateDiscountCodesArgs } from './types/graphql-types';
+import { CreateDiscountCodesResponse, MutationCreateDiscountCodesArgs } from './types/graphql-types';
 
 const schema = loadSchemaSync(path.join('graphql', 'schema.graphqls'), {
   loaders: [new GraphQLFileLoader()]
@@ -20,8 +20,10 @@ const discountCodeResolver = Container.get(DiscountCodesResolver);
 const resolvers: Resolvers = {
     Query: {},
     Mutation: {
-        createDiscountCodes: async (parent: unknown, args: MutationCreateDiscountCodesArgs, {context}) => {
-            return discountCodeResolver.createDiscountCodes(args, context);
+        createDiscountCodes: async (parent: unknown, args: MutationCreateDiscountCodesArgs, { context }) => {
+            const response = await discountCodeResolver.createDiscountCodes(args, context);
+            context.discuntCodesToPersist = response
+            return { created: true } as CreateDiscountCodesResponse
         }
     }
 };

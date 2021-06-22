@@ -1,25 +1,35 @@
 import { Context } from '@azure/functions';
+import { ApolloError } from 'apollo-server-azure-functions';
 import { Service } from 'typedi';
 
-import { DiscountCode, DiscountCodesResponse, MutationCreateDiscountCodesArgs } from '../types/graphql-types';
+import { GraphQLErrors } from '../types/errors';
+import { DiscountCode, MutationCreateDiscountCodesArgs } from '../types/graphql-types';
 
 @Service()
 export class DiscountCodesResolver {
 
-  public createDiscountCodes = async(args: MutationCreateDiscountCodesArgs, context: Context): Promise<DiscountCodesResponse> => {
-    context.log.info("Recived request to create discount codes with arguments", args);
+  public createDiscountCodes = async (args: MutationCreateDiscountCodesArgs, context: Context): Promise<DiscountCode[]> => {
     const discountCodes: DiscountCode[] = [];
-    for (let i = 0; i < args.codesToCreate; i++) {
-      discountCodes.push({
-        id: i.toString(),
-        code: "test",
-        createdAt: Date.now().toLocaleString()
-      } as DiscountCode)
+    try {
+      context.log.info("Recived request to create discount codes with arguments", args);
+      for (let i = 0; i < args.codesToCreate; i++) {
+        discountCodes.push({
+          code: "test",
+          brand: args.id,
+          discount: args.discountPercent,
+          createdAt: Date.now()
+        } as DiscountCode);
+      }
+      context.log.info(`Created ${discountCodes.length} discount codes for bran ${ args.id }`);
+
+    } catch {
+      context.log.error(`An error occoured when generating discount codes for request with arguments: ${args}`);
+      throw new ApolloError('Could not create discount codes', GraphQLErrors.DiscountCodeGenerationError.toString(), args );
     }
 
     return Promise.resolve(
-      {discountCodes} as DiscountCodesResponse
+      discountCodes
     );
-}
+  }
 
 }

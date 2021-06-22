@@ -32,11 +32,14 @@ type Mutation {
     The discount percent to set on the discount codes.
     """
     discountPercent: Int!
-  ): DiscountCodesResponse!
+  ): CreateDiscountCodesResponse!
 }
 
-type DiscountCodesResponse {
-  discountCodes: [DiscountCode]!
+type CreateDiscountCodesResponse {
+  """
+  A boolean representing the mutation result
+  """
+  created: Boolean!
 }
 
 type DiscountCode {
@@ -46,9 +49,9 @@ type DiscountCode {
   id: ID!
 
   """
-  The brand the code belongs to.
+  Identifier of the brand the code belongs to.
   """
-  brand: Brand
+  brand: ID!
 
   """
   The discount in percent.
@@ -63,27 +66,10 @@ type DiscountCode {
   """
   The date the code was created.
   """
-  createdAt: String!
+  createdAt: Int!
 
   """
   The date the code expires
   """
   expiresAt: String!
-}
-
-type Brand {
-  """
-  The name of the brand.
-  """
-  name: String!
-
-  """
-  The id of the brand.
-  """
-  id: ID!
-
-  """
-  The date the brand was created.
-  """
-  createdAt: String!
 }
