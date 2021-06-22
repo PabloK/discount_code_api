@@ -39,7 +39,7 @@ export type DiscountCode = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Create the specified number of discount codes for the specified brand */
+  /** Start a job to create the specified number of discount codes for the specified brand */
   createDiscountCodes: CreateDiscountCodesResponse;
 };
 

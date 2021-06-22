@@ -1,33 +1,27 @@
 import 'reflect-metadata';
 
-import { Context } from '@azure/functions';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
 import { ApolloServer } from 'apollo-server-azure-functions';
 import * as path from 'path';
-import Container from 'typedi';
 
 import { Resolvers } from '../src/types/graphql-types';
-import { DiscountCodeResolver } from './resolvers/discountcode.resolver';
 import { CreateDiscountCodesResponse, MutationCreateDiscountCodesArgs } from './types/graphql-types';
 
 const schema = loadSchemaSync(path.join('graphql', 'schema.graphqls'), {
   loaders: [new GraphQLFileLoader()]
 });
 
-const discountCodeResolver = Container.get(DiscountCodeResolver);
-
 const resolvers: Resolvers = {
-    Query: {},
-    Mutation: {
-      createDiscountCodes: async (parent: unknown, args: MutationCreateDiscountCodesArgs, { context }) => {
-        const c = context as Context
-        const response = await discountCodeResolver.createDiscountCodes(args, context);
-        context.bindings.outputDocument = response;
-        return { created: true } as CreateDiscountCodesResponse
-      }
+  Query: {},
+  Mutation: {
+    createDiscountCodes: async (parent: unknown, args: MutationCreateDiscountCodesArgs, { context }) => {
+      // TODO: Validate args
+      context.bindings.outputQueueItems = {...args };
+      return { created: true } as CreateDiscountCodesResponse
     }
+  }
 };
 
 const schemaWithResolvers = addResolversToSchema({

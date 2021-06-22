@@ -1,0 +1,22 @@
+{
+  "bindings": [
+    {
+      "name": "discountJob",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "discountcode",
+      "connection": "discountcode_SERVICEBUS"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "outputDocuments",
+      "databaseName": "discountcodedb",
+      "collectionName": "discountcodes",
+      "createIfNotExists": true,
+      "connectionStringSetting": "discountcodedb_DOCUMENTDB",
+      "partitionKey": "/brand"
+    }
+  ],
+  "scriptFile": "../dist/discount-worker/index.js"
+}

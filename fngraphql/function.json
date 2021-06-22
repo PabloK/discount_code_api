@@ -17,14 +17,13 @@
       "name": "$return"
     },
     {
-      "type": "cosmosDB",
+      "type": "serviceBus",
       "direction": "out",
-      "name": "outputDocument",
-      "databaseName": "discountcodes",
-      "collectionName": "discountcodes",
-      "connectionStringSetting": "discountcodedb_DOCUMENTDB",
-      "partitionKey": "/id"
+      "connection": "discountcode_SERVICEBUS",
+      "name": "outputQueueItems",
+      "queueName": "discountcode",
+      "topicName": "discountcode"
     }
   ],
-  "scriptFile": "../dist/index.js"
+  "scriptFile": "../dist/graphql/index.js"
 }

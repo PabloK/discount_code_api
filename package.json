@@ -11,10 +11,9 @@
     "name": "Pablo Jomer"
   },
   "scripts": {
-    "build": "ncc build -s -m src/main.ts -o dist/",
+    "build": "ncc build -s -m src/main.ts -o dist/graphql; ncc build -s -m src/discount.worker.ts -o dist/discount-worker",
     "prestart": "run-s generate build",
     "start": "func start",
-    "debug": "ts-node ./main.ts",
     "test": "run-s test:unit",
     "test:unit": "jest --config jest.config.js --coverage",
     "generate": "graphql-codegen --config ./graphql/graphql-codegen.yml"
