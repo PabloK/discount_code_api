@@ -11,9 +11,10 @@
     "name": "Pablo Jomer"
   },
   "scripts": {
-    "compile": "ncc build -m src/main.ts -o dist/",
-    "prestart": "npm run compile",
+    "build": "ncc build -s -m src/main.ts -o dist/",
+    "prestart": "run-s generate build",
     "start": "func start",
+    "debug": "ts-node ./main.ts",
     "test": "run-s test:unit",
     "test:unit": "jest --config jest.config.js --coverage",
     "generate": "graphql-codegen --config ./graphql/graphql-codegen.yml"
@@ -28,6 +29,7 @@
     "graphql": "^15.5.1",
     "reflect-metadata": "^0.1.13",
     "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
     "typedi": "^0.10.0"
   },
   "devDependencies": {

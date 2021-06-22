@@ -1,5 +1,4 @@
 import { GraphQLResolveInfo } from 'graphql';
-
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -34,6 +33,8 @@ export type DiscountCode = {
   createdAt: Scalars['Int'];
   /** The date the code expires */
   expiresAt: Scalars['String'];
+  /** If the code has been used or not */
+  used: Scalars['Boolean'];
 };
 
 export type Mutation = {
@@ -172,6 +173,7 @@ export type DiscountCodeResolvers<ContextType = any, ParentType extends Resolver
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   expiresAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  used?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

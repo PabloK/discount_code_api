@@ -72,4 +72,9 @@ type DiscountCode {
   The date the code expires
   """
   expiresAt: String!
+
+  """
+  If the code has been used or not
+  """
+  used: Boolean!
 }

@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import { Context } from '@azure/functions';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
@@ -20,11 +21,12 @@ const discountCodeResolver = Container.get(DiscountCodeResolver);
 const resolvers: Resolvers = {
     Query: {},
     Mutation: {
-        createDiscountCodes: async (parent: unknown, args: MutationCreateDiscountCodesArgs, { context }) => {
-            const response = await discountCodeResolver.createDiscountCodes(args, context);
-            context.discuntCodesToPersist = response
-            return { created: true } as CreateDiscountCodesResponse
-        }
+      createDiscountCodes: async (parent: unknown, args: MutationCreateDiscountCodesArgs, { context }) => {
+        const c = context as Context
+        const response = await discountCodeResolver.createDiscountCodes(args, context);
+        context.bindings.outputDocument = response;
+        return { created: true } as CreateDiscountCodesResponse
+      }
     }
 };
 

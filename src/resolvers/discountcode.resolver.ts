@@ -22,7 +22,8 @@ export class DiscountCodeResolver {
           code: newCode,
           brand: args.id,
           discount: args.discountPercent,
-          createdAt: Date.now()
+          createdAt: Date.now(),
+          used: false
         } as DiscountCode);
       }
       context.log.info(`Created ${discountCodes.length} discount codes for brand with id ${ args.id }`);
