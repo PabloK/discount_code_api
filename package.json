@@ -12,11 +12,12 @@
   },
   "scripts": {
     "build": "ncc build -s -m src/main.ts -o dist/graphql; ncc build -s -m src/discount.worker.ts -o dist/discount-worker",
+    "deploy:dev": "./infrastructure/deploy.sh \"Kostnadsfri utvärderingsversion\"",
+    "generate": "graphql-codegen --config ./graphql/graphql-codegen.yml",
     "prestart": "run-s generate build",
     "start": "func start",
-    "test": "run-s test:unit",
     "test:unit": "jest --config jest.config.js --coverage",
-    "generate": "graphql-codegen --config ./graphql/graphql-codegen.yml"
+    "test": "run-s test:unit"
   },
   "dependencies": {
     "@graphql-codegen/cli": "^1.21.5",
