@@ -55,48 +55,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": {
-        "parallel": true,
-        "tasks": [
-          {
-            "name": "Auto fix lint errors",
-            "tasks": [
-              "lint:fix"
-            ]
-          },
-          {
-            "name": "Auto format files",
-            "tasks": [
-              "format:fix"
-            ]
-          }
-        ]
-      },
-      "prepush": {
-        "tasks": [
-          {
-            "name": "Lint and format",
-            "parallel": true,
-            "tasks": [
-              "eslint",
-              "format"
-            ]
-          },
-          {
-            "name": "Build",
-            "tasks": [
-              "build"
-            ]
-          },
-          {
-            "name": "Test",
-            "parallel": false,
-            "tasks": [
-              "test"
-            ]
-          }
-        ]
-      }
+      "pre-commit": "run-s lint:fix format:fix",
+      "pre-push": "run-s lint:fix format:fix build test"
     }
   }
 }
