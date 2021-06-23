@@ -3,7 +3,5 @@ import { Service } from 'typedi';
 
 @Service()
 export class DiscountCodeGenerator {
-  public generateDiscountcode = (): string => {
-    return crypto.randomBytes(4).toString("hex");
-  }
+  public generateDiscountCode = (): string => crypto.randomBytes(4).toString('hex');
 }

@@ -17,26 +17,82 @@
     "prestart": "run-s generate build",
     "start": "func start",
     "test:unit": "jest --config jest.config.js --coverage",
-    "test": "run-s test:unit"
+    "test": "run-s test:unit",
+    "lint:fix": "eslint . --ext \".ts,.tsx\" --max-warnings 0 --fix",
+    "format:fix": "prettier \"**/*[^.d$].ts\" --write"
   },
   "dependencies": {
+    "@azure/functions": "^1.2.3",
     "@graphql-codegen/cli": "^1.21.5",
     "@graphql-codegen/typescript-operations": "^1.18.2",
     "@graphql-codegen/typescript-resolvers": "^1.19.4",
+    "@graphql-tools/graphql-file-loader": "^6.2.7",
+    "@graphql-tools/load": "^6.2.8",
+    "@graphql-tools/schema": "^7.1.5",
     "@types/jest": "^26.0.23",
     "apollo-server-azure-functions": "^2.25.1",
     "crypto": "^1.0.1",
     "graphql": "^15.5.1",
+    "prettier": "^2.3.1",
     "reflect-metadata": "^0.1.13",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "typedi": "^0.10.0"
   },
   "devDependencies": {
-    "jest": "^27.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
     "@vercel/ncc": "^0.28.6",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.4",
     "npm-run-all": "^4.1.5",
-    "@azure/functions": "^1.2.3",
     "typescript": "^4.0.0"
+  },
+  "workflows": {
+    "precommit": {
+      "parallel": true,
+      "tasks": [
+        {
+          "name": "Auto fix lint errors",
+          "tasks": [
+            "lint:fix"
+          ]
+        },
+        {
+          "name": "Auto format files",
+          "tasks": [
+            "format:fix"
+          ]
+        }
+      ]
+    },
+    "prepush": {
+      "tasks": [
+        {
+          "name": "Lint and format",
+          "parallel": true,
+          "tasks": [
+            "eslint",
+            "format"
+          ]
+        },
+        {
+          "name": "Build",
+          "tasks": [
+            "build"
+          ]
+        },
+        {
+          "name": "Test",
+          "parallel": false,
+          "tasks": [
+            "test"
+          ]
+        }
+      ]
+    }
   }
 }

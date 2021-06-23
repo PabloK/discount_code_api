@@ -1,29 +1,29 @@
 {
-  "bindings": [
+  bindings: [
     {
-      "authLevel": "anonymous",
-      "type": "httpTrigger",
-      "direction": "in",
-      "name": "req",
-      "methods": [
-        "get",
-        "post"
+      authLevel: 'anonymous',
+      type: 'httpTrigger',
+      direction: 'in',
+      name: 'req',
+      methods: [
+        'get',
+        'post'
       ],
-      "route": "graphql"
+      route: 'graphql'
     },
     {
-      "type": "http",
-      "direction": "out",
-      "name": "$return"
+      type: 'http',
+      direction: 'out',
+      name: '$return'
     },
     {
-      "type": "serviceBus",
-      "direction": "out",
-      "connection": "discountcode_SERVICEBUS",
-      "name": "outputQueueItems",
-      "queueName": "discountcode",
-      "topicName": "discountcode"
-    }
+      type: 'serviceBus',
+      direction: 'out',
+      connection: 'discountcode_SERVICEBUS',
+      name: 'outputQueueItems',
+      queueName: 'discountcode',
+      topicName: 'discountcode'
+    },
   ],
-  "scriptFile": "../dist/graphql/index.js"
-}
+  scriptFile: '../dist/graphql/index.js'
+};

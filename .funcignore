@@ -1,14 +1,11 @@
 *.js.map
 *.log
 *.md
-*.rest
 *.sh
 *.ts
-.babelrc.json
 .eslint*
 .git*
 .idea
-.lintstagedrc.js
 .prettier*
 .vscode
 coverage
@@ -18,3 +15,5 @@ node_modules
 package.json
 test
 tsconfig.json
+coverage
+.vscode

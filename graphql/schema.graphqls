@@ -5,7 +5,9 @@ schema {
 
 type Query {
   """
-  Fetch a discount code with a specified id
+  Fetch a data about a discount code with a specified id.
+
+  Not Implemented.
   """
   getDiscountCode(
     """
@@ -33,6 +35,25 @@ type Mutation {
     """
     discountPercent: Int!
   ): CreateDiscountCodesResponse!
+
+  """
+  Give a user a discount code.
+  """
+  giveDiscountCode(
+    """
+    The id of the user to assign the discount code to.
+    """
+    userId: ID!
+
+    """
+    The id of the brand to fetch a discount code from.
+    """
+    brandId: ID!
+  ): GiveDiscountCodeResponse
+}
+
+type GiveDiscountCodeResponse {
+  discountCode: DiscountCode
 }
 
 type CreateDiscountCodesResponse {
@@ -74,7 +95,7 @@ type DiscountCode {
   expiresAt: String!
 
   """
-  If the code has been used or not
+  The id of the user the code has been assigned to.
   """
-  used: Boolean!
+  userId: ID
 }

@@ -1,3 +1,7 @@
+# Discount Code Generator API
+
+This api is a micro service for generating and handling discount codes. The API is developed as an Azure Functions application intended to run on that platform.
+
 ## Installation
 
 To install the application locally run the following terminal commands from the root folder.

@@ -1,0 +1,13 @@
+dist
+coverage
+node_modules
+!.eslintrc.js
+!.eslintrc.no-type-checking.js
+!.lintstagedrc.js
+graphql-types.ts
+*.json
+*.sh
+*.dat
+*.yml
+*.graphqls
+*.md
