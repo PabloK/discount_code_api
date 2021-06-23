@@ -25,11 +25,11 @@ type Mutation {
     """
     id: ID!
     """
-    The number of codes to create
+    The number of codes to create. Should be between 1 and 10 000
     """
     codesToCreate: Int!
     """
-    The discount percent to set on the discount codes.
+    The discount percent to set on the discount codes. Should be between 1 and 100.
     """
     discountPercent: Int!
   ): CreateDiscountCodesResponse!
