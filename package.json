@@ -19,7 +19,8 @@
     "test:unit": "jest --config jest.config.js --coverage",
     "test": "run-s test:unit",
     "lint:fix": "eslint . --ext \".ts,.tsx\" --max-warnings 0 --fix",
-    "format:fix": "prettier \"**/*[^.d$].ts\" --write"
+    "format:fix": "prettier \"**/*[^.d$].ts\" --write",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@azure/functions": "^1.2.3",
@@ -47,52 +48,55 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
     "jest": "^27.0.4",
     "npm-run-all": "^4.1.5",
     "typescript": "^4.0.0"
   },
-  "workflows": {
-    "precommit": {
-      "parallel": true,
-      "tasks": [
-        {
-          "name": "Auto fix lint errors",
-          "tasks": [
-            "lint:fix"
-          ]
-        },
-        {
-          "name": "Auto format files",
-          "tasks": [
-            "format:fix"
-          ]
-        }
-      ]
-    },
-    "prepush": {
-      "tasks": [
-        {
-          "name": "Lint and format",
-          "parallel": true,
-          "tasks": [
-            "eslint",
-            "format"
-          ]
-        },
-        {
-          "name": "Build",
-          "tasks": [
-            "build"
-          ]
-        },
-        {
-          "name": "Test",
-          "parallel": false,
-          "tasks": [
-            "test"
-          ]
-        }
-      ]
+  "husky": {
+    "hooks": {
+      "precommit": {
+        "parallel": true,
+        "tasks": [
+          {
+            "name": "Auto fix lint errors",
+            "tasks": [
+              "lint:fix"
+            ]
+          },
+          {
+            "name": "Auto format files",
+            "tasks": [
+              "format:fix"
+            ]
+          }
+        ]
+      },
+      "prepush": {
+        "tasks": [
+          {
+            "name": "Lint and format",
+            "parallel": true,
+            "tasks": [
+              "eslint",
+              "format"
+            ]
+          },
+          {
+            "name": "Build",
+            "tasks": [
+              "build"
+            ]
+          },
+          {
+            "name": "Test",
+            "parallel": false,
+            "tasks": [
+              "test"
+            ]
+          }
+        ]
+      }
     }
   }
 }
