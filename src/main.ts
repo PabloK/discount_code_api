@@ -5,10 +5,15 @@ import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
 import { ApolloError, ApolloServer } from 'apollo-server-azure-functions';
 import * as path from 'path';
+import Container from 'typedi';
 
+import { SCALARS } from './scalars';
+import { DiscountCodeService } from './services/discount.code.service';
 import {
   CreateDiscountCodesResponse,
+  GiveDiscountCodeResponse,
   MutationCreateDiscountCodesArgs,
+  MutationGiveDiscountCodeArgs,
   Resolvers,
 } from './types/graphql-types';
 
@@ -16,8 +21,11 @@ const schema = loadSchemaSync(path.join('graphql', 'schema.graphqls'), {
   loaders: [new GraphQLFileLoader()],
 });
 
+const discountCodeService: DiscountCodeService = Container.get(DiscountCodeService);
+
 const resolvers: Resolvers = {
   Query: {},
+  Date: SCALARS.DATE_SCALAR,
   Mutation: {
     createDiscountCodes: async (
       parent: unknown,
@@ -32,6 +40,13 @@ const resolvers: Resolvers = {
       }
       context.bindings.outputQueueItems = { ...args };
       return { created: true } as CreateDiscountCodesResponse;
+    },
+    giveDiscountCode: async (
+      parent: unknown,
+      args: MutationGiveDiscountCodeArgs,
+    ): Promise<GiveDiscountCodeResponse> => {
+      const code = await discountCodeService.assignDiscountCode(args.userId, args.brandId);
+      return { discountCode: code } as GiveDiscountCodeResponse;
     },
   },
 };

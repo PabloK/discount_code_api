@@ -3,6 +3,8 @@ schema {
   mutation: Mutation
 }
 
+scalar Date
+
 type Query {
   """
   Fetch a data about a discount code with a specified id.
@@ -87,12 +89,12 @@ type DiscountCode {
   """
   The date the code was created.
   """
-  createdAt: Int!
+  createdAt: Date!
 
   """
   The date the code expires
   """
-  expiresAt: String!
+  expiresAt: Date!
 
   """
   The id of the user the code has been assigned to.

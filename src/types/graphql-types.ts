@@ -1,5 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
-
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -12,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
 };
 
 export type CreateDiscountCodesResponse = {
@@ -19,6 +19,7 @@ export type CreateDiscountCodesResponse = {
   /** A boolean representing the mutation result */
   created: Scalars['Boolean'];
 };
+
 
 export type DiscountCode = {
   __typename?: 'DiscountCode';
@@ -31,9 +32,9 @@ export type DiscountCode = {
   /** The discount code formatted for display. */
   code: Scalars['String'];
   /** The date the code was created. */
-  createdAt: Scalars['Int'];
+  createdAt: Scalars['Date'];
   /** The date the code expires */
-  expiresAt: Scalars['String'];
+  expiresAt: Scalars['Date'];
   /** The id of the user the code has been assigned to. */
   userId?: Maybe<Scalars['ID']>;
 };
@@ -51,11 +52,13 @@ export type Mutation = {
   giveDiscountCode?: Maybe<GiveDiscountCodeResponse>;
 };
 
+
 export type MutationCreateDiscountCodesArgs = {
   id: Scalars['ID'];
   codesToCreate: Scalars['Int'];
   discountPercent: Scalars['Int'];
 };
+
 
 export type MutationGiveDiscountCodeArgs = {
   userId: Scalars['ID'];
@@ -72,11 +75,15 @@ export type Query = {
   getDiscountCode: DiscountCode;
 };
 
+
 export type QueryGetDiscountCodeArgs = {
   id: Scalars['ID'];
 };
 
+
+
 export type ResolverTypeWrapper<T> = Promise<T> | T;
+
 
 export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
   fragment: string;
@@ -153,6 +160,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   CreateDiscountCodesResponse: ResolverTypeWrapper<CreateDiscountCodesResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   DiscountCode: ResolverTypeWrapper<DiscountCode>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -166,6 +174,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   CreateDiscountCodesResponse: CreateDiscountCodesResponse;
   Boolean: Scalars['Boolean'];
+  Date: Scalars['Date'];
   DiscountCode: DiscountCode;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
@@ -180,13 +189,17 @@ export type CreateDiscountCodesResponseResolvers<ContextType = any, ParentType e
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type DiscountCodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['DiscountCode'] = ResolversParentTypes['DiscountCode']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   brand?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   discount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  expiresAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  expiresAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   userId?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -207,11 +220,13 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type Resolvers<ContextType = any> = {
   CreateDiscountCodesResponse?: CreateDiscountCodesResponseResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   DiscountCode?: DiscountCodeResolvers<ContextType>;
   GiveDiscountCodeResponse?: GiveDiscountCodeResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
+
 
 /**
  * @deprecated
